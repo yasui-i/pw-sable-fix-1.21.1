@@ -21,11 +21,11 @@
   },
   {
     "file": "electroenergetics.jar",
-    "sha256": "f15c53b1b25b54eff7fc9bc27cf5f484973be67380fdb3530e80be3ae58abcf0",
+    "sha256": "2362decf60ace66037eb2ae79f34fed57b5f152e0435164f5f91912ea837052f",
     "mods": [
       {
         "id": "electroenergetics",
-        "version": "1.21.1-1.2.0-127"
+        "version": "1.21.1-1.1.4"
       }
     ]
   },

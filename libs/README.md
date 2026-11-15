@@ -6,7 +6,7 @@
 | --- | --- |
 | `create.jar` | Create 6.0.10 |
 | `pantographsandwires.jar` | Pantographs & Wires 1.21.1-beta-0.2.3-C6 |
-| `electroenergetics.jar` | Create Electro Energetics 1.21.1-1.2.0-127 |
+| `electroenergetics.jar` | Create Electro Energetics 1.21.1-1.1.4 |
 | `sable.jar` | Sable 2.0.6 |
 | `veil.jar` | Veil 4.3.2 |
 | `geckolib.jar` | 从所用 P&W JAR 的 `META-INF/jars/` 提取内置 GeckoLib 4.8.4；仅编译使用，玩家无需另装 |

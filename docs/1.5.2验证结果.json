@@ -1,0 +1,29 @@
+{
+  "version": "1.5.2",
+  "cee_version": "1.21.1-1.1.4",
+  "cee_sha256": "2362decf60ace66037eb2ae79f34fed57b5f152e0435164f5f91912ea837052f",
+  "sha256": "7ff770849fa892f16f3607ac9ac0e3bea4e33aa748539e98b16306871b0367b1",
+  "bytes": 145755,
+  "checks": {
+    "multiarm": {
+      "result": "PASS",
+      "assertions": 75
+    },
+    "moving_dc": {
+      "result": "PASS",
+      "assertions": 136
+    },
+    "moving_ac": {
+      "result": "PASS",
+      "assertions": 136
+    }
+  },
+  "comparison_with": "1.5.1",
+  "removed_files": [],
+  "changed_files": [
+    "META-INF/neoforge.mods.toml",
+    "com/yasui_i/pwsablefix/compat/PawWireElectricity.class"
+  ],
+  "unchanged_resource_count": 4,
+  "client_manual_retest": false
+}

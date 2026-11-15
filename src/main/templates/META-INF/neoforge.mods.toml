@@ -79,7 +79,7 @@ config="${mod_id}.mixins.json"
 [[dependencies.${mod_id}]]
     modId="electroenergetics"
     type="required"
-    versionRange="[1.21.1-1.2.0-127]"
+    versionRange="[1.21.1-1.1.4]"
     ordering="AFTER"
     side="BOTH"
 
