@@ -1,0 +1,82 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+description='''
+Redstone-controlled PAW and CEE pantographs for Sable physics trains.
+Power raises the collector; losing power lowers it. PAW collectors expose a CEE electrical terminal
+and feed real CEE circuits from PAW contact/feed wires or CEE catenary, with Sable pose transforms.
+Multi-arm cantilevers expose separate CEE terminals, and inline insulators split conductor sections.
+Adds moving contact/departure arc audio. The independent electric motor is now provided by EMU Cab.
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="create"
+    type="required"
+    versionRange="[6.0.7,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="pantographsandwires"
+    type="required"
+    versionRange="[1.21.1-beta-0.2.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="sable"
+    type="required"
+    versionRange="[2.0.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="sablecompanion"
+    type="required"
+    versionRange="[1.6.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="geckolib"
+    type="required"
+    versionRange="[4.8.4,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="dragonlib"
+    type="required"
+    versionRange="[3.0.28,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="electroenergetics"
+    type="required"
+    versionRange="[1.2.0-127,)"
+    ordering="AFTER"
+    side="BOTH"
+

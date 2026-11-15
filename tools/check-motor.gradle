@@ -1,0 +1,24 @@
+allprojects { afterEvaluate {
+    tasks.register('compileMotorHarness',JavaCompile) {
+        source=fileTree('tools/motor-harness') { include '**/*.java' }
+        classpath=sourceSets.main.compileClasspath+sourceSets.main.output
+        destinationDirectory=layout.buildDirectory.dir('motor-harness-classes')
+        options.encoding='UTF-8';dependsOn 'classes'
+    }
+    tasks.register('motorHarnessJar',Jar) {
+        dependsOn 'compileMotorHarness';from layout.buildDirectory.dir('motor-harness-classes')
+        from('tools/motor-harness') { include 'META-INF/**' }
+        archiveFileName='pwsable-motor-test.jar';destinationDirectory=layout.buildDirectory.dir('motor-server/mods')
+        doLast { copy { from archiveFile; into 'build/motor-client/mods' } }
+    }
+    neoForge.runs.server.gameDirectory=file('build/motor-server')
+    if(project.hasProperty('motorClientCheck'))neoForge.runs.server.systemProperty 'pwsable.test.motorClient','true'
+    tasks.named('runServer'){
+        dependsOn 'motorHarnessJar'
+        doFirst{file('build/motor-server/motor-server-check.txt').delete()}
+        doLast{def result=file('build/motor-server/motor-server-check.txt');if(!result.exists()||result.text.contains('FAIL'))throw new GradleException(result.exists()?result.text:'Motor harness did not finish')}
+    }
+    neoForge.runs.client.gameDirectory=file('build/motor-client')
+    neoForge.runs.client.programArguments.addAll '--quickPlayMultiplayer','127.0.0.1:25582','--width','960','--height','640'
+    tasks.named('runClient'){dependsOn 'motorHarnessJar'}
+} }

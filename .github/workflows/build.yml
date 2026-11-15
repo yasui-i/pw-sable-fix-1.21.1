@@ -1,0 +1,25 @@
+name: Source checks
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+jobs:
+  contact-sound-state:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Compile contact sound state checks
+        run: >-
+          javac -encoding UTF-8 -d build/contact-sound-ci
+          src/main/java/com/yasui_i/pwsablefix/sound/PantographContactSoundState.java
+          tools/PantographContactSoundStateCheck.java
+      - name: Run contact sound state checks
+        run: java -ea -cp build/contact-sound-ci PantographContactSoundStateCheck

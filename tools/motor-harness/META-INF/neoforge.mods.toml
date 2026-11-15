@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+[[mods]]
+modId="pwsablemotortest"
+version="1"
+displayName="Isolated motor test"
+[[dependencies.pwsablemotortest]]
+modId="pwsablefix"
+type="required"
+versionRange="[1.4.0,)"
+ordering="AFTER"
+side="BOTH"

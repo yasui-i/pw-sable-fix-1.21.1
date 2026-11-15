@@ -1,0 +1,52 @@
+// Deterministic moving Sable collector against real PAW geometry and the real CEE solver.
+allprojects { afterEvaluate {
+    tasks.register('compileMovingElectricalHarness', JavaCompile) {
+        source = fileTree('tools/moving-electrical-harness') { include '**/*.java' }
+        classpath = sourceSets.main.compileClasspath + sourceSets.main.output
+        destinationDirectory = layout.buildDirectory.dir('moving-electrical-harness-classes')
+        options.encoding = 'UTF-8'
+        dependsOn 'classes'
+    }
+    tasks.register('movingElectricalHarnessJar', Jar) {
+        dependsOn 'compileMovingElectricalHarness'
+        from layout.buildDirectory.dir('moving-electrical-harness-classes')
+        from('tools/moving-electrical-harness') { include 'META-INF/**' }
+        archiveFileName = 'pwsable-moving-electrical-test.jar'
+        destinationDirectory = layout.buildDirectory.dir('moving-electrical-server/mods')
+    }
+    neoForge.runs.server.gameDirectory = file('build/moving-electrical-server')
+    if(project.hasProperty('movingAC')) neoForge.runs.server.systemProperty 'pwsable.test.movingAC','true'
+    def bridgeClasses = 'com/yasui_i/pwsablefix/compat'
+    tasks.register('restoreMovingElectricalClasses') {
+        doLast {
+            if(project.hasProperty('movingBaseline')) copy {
+                from file('build/moving-fixed-class-backup')
+                into file('build/classes/java/main/'+bridgeClasses)
+            }
+        }
+    }
+    tasks.named('runServer') {
+        dependsOn 'movingElectricalHarnessJar'
+        finalizedBy 'restoreMovingElectricalClasses'
+        doFirst {
+            file('build/moving-electrical-server/moving-electrical-result.txt').delete()
+            if(project.hasProperty('movingBaseline')) {
+                copy {
+                    from file('build/classes/java/main/'+bridgeClasses)
+                    include 'PWSableElectricalBridge*.class'
+                    into file('build/moving-fixed-class-backup')
+                }
+                copy {
+                    from file('build/moving-baseline-144/'+bridgeClasses)
+                    include 'PWSableElectricalBridge*.class'
+                    into file('build/classes/java/main/'+bridgeClasses)
+                }
+            }
+        }
+        doLast {
+            def result = file('build/moving-electrical-server/moving-electrical-result.txt')
+            if (!result.exists() || !result.text.contains('RESULT PASS') || result.text.contains('FAIL'))
+                throw new GradleException(result.exists() ? result.text : 'Moving electrical harness did not finish')
+        }
+    }
+} }

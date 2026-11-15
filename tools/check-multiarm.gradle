@@ -1,0 +1,27 @@
+// Real isolated NeoForge server; never touches a player world or launcher installation.
+allprojects { afterEvaluate {
+    tasks.register('compileMultiarmHarness', JavaCompile) {
+        source = fileTree('tools/multiarm-harness') { include '**/*.java' }
+        classpath = sourceSets.main.compileClasspath + sourceSets.main.output
+        destinationDirectory = layout.buildDirectory.dir('multiarm-harness-classes')
+        options.encoding = 'UTF-8'
+        dependsOn 'classes'
+    }
+    tasks.register('multiarmHarnessJar', Jar) {
+        dependsOn 'compileMultiarmHarness'
+        from layout.buildDirectory.dir('multiarm-harness-classes')
+        from('tools/multiarm-harness') { include 'META-INF/**' }
+        archiveFileName = 'pwsable-multiarm-test.jar'
+        destinationDirectory = layout.buildDirectory.dir('multiarm-server/mods')
+    }
+    neoForge.runs.server.gameDirectory = file('build/multiarm-server')
+    tasks.named('runServer') {
+        dependsOn 'multiarmHarnessJar'
+        doFirst { file('build/multiarm-server/multiarm-check-result.txt').delete() }
+        doLast {
+            def result = file('build/multiarm-server/multiarm-check-result.txt')
+            if (!result.exists() || !result.text.contains('RESULT PASS') || result.text.contains('FAIL'))
+                throw new GradleException(result.exists() ? result.text : 'Multiarm harness did not finish')
+        }
+    }
+} }

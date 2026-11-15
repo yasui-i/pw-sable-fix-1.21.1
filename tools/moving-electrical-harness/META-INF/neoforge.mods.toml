@@ -1,0 +1,13 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="All Rights Reserved"
+[[mods]]
+modId="pwsablemovingelectricaltest"
+version="1"
+displayName="Isolated moving collector electrical test"
+[[dependencies.pwsablemovingelectricaltest]]
+modId="pwsablefix"
+type="required"
+versionRange="[1.4.4,)"
+ordering="AFTER"
+side="BOTH"

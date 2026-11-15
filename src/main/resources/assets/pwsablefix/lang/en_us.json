@@ -1,0 +1,10 @@
+{
+  "pwsablefix.nodes.arm": "Cantilever arm %s",
+  "pwsablefix.configuration.pantographs": "Pantographs",
+  "pwsablefix.configuration.pantographs.sublevel_wire_contact": "Physics sub-level wire contact",
+  "itemGroup.pwsablefix.traction": "P&W Traction",
+  "block.pwsablefix.vvvf_motor": "VVVF Redstone Ramp Motor",
+  "pwsablefix.motor.electrical": "Measured voltage: %s V · Estimated load: %s W",
+  "pwsablefix.motor.command": "Redstone command: %s / 15 · Drive: %s%%",
+  "pwsablefix.motor.output": "Output speed: %s RPM"
+}

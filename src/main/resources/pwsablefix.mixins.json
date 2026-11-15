@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.yasui_i.pwsablefix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PantographBlockEntityMixin",
+    "PantographElectricalBlockMixin",
+    "PawConnectorElectricalMixin",
+    "CantileverElectricalUpdateMixin",
+    "PawFeederWireItemMixin",
+    "CeePantographAccess",
+    "CeePantographRedstoneMixin",
+    "CeePantographBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

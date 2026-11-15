@@ -1,0 +1,10 @@
+{
+  "pwsablefix.nodes.arm": "腕臂 %s",
+  "pwsablefix.configuration.pantographs": "受电弓",
+  "pwsablefix.configuration.pantographs.sublevel_wire_contact": "物理子层级接触网检测",
+  "itemGroup.pwsablefix.traction": "P&W 牵引设备",
+  "block.pwsablefix.vvvf_motor": "VVVF 红石渐变电机",
+  "pwsablefix.motor.electrical": "实际电压：%s V · 估算用电：%s W",
+  "pwsablefix.motor.command": "红石指令：%s / 15 · 当前功率比例：%s%%",
+  "pwsablefix.motor.output": "输出转速：%s RPM"
+}
