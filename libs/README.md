@@ -9,7 +9,7 @@
 | `electroenergetics.jar` | Create Electro Energetics 1.21.1-1.2.0-127 |
 | `sable.jar` | Sable 2.0.6 |
 | `veil.jar` | Veil 4.3.2 |
-| `geckolib.jar` | GeckoLib 4.9.3 |
+| `geckolib.jar` | 从所用 P&W JAR 的 `META-INF/jars/` 提取内置 GeckoLib 4.8.4；仅编译使用，玩家无需另装 |
 | `dragonlib.jar` | DragonLib 3.0.29 |
 | `registrate.jar` | 从所用 Create JAR 的 `META-INF/jarjar/` 中提取 Registrate |
 | `flywheel.jar` | 从所用 Create JAR 中提取 Flywheel 1.0.6 |

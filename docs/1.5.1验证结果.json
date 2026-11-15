@@ -1,0 +1,23 @@
+{
+  "version": "1.5.1",
+  "sha256": "8940c41752daffdd755e7ed0b08ed13261227532ff2de966a41549a24cdaa9ed",
+  "bytes": 145751,
+  "compiler_geckolib": "4.8.4 extracted byte-for-byte from P&W",
+  "runtime_geckolib": "4.8.4 bundled within P&W; no standalone GeckoLib JAR in test mods",
+  "checks": {
+    "multiarm": {
+      "result": "PASS",
+      "assertions": 75
+    },
+    "moving_dc": {
+      "result": "PASS",
+      "assertions": 136
+    },
+    "moving_ac": {
+      "result": "PASS",
+      "assertions": 136
+    }
+  },
+  "game_classes_and_assets_unchanged_from": "1.5.0",
+  "client_manual_retest": false
+}

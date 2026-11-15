@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/assets/logo.png" alt="P&W Sable Fix Logo" width="256"></p>
 
-# P&W Sable Fix 1.5.0
+# P&W Sable Fix 1.5.1
 
 **让接触网真正为你的物理列车供电。**
 
@@ -18,7 +18,7 @@
 
 ## 安装与依赖
 
-客户端、服务端均安装 **pwsablefix-1.5.0.jar**，并移出旧版同名附属。需要 Java 21。
+客户端、服务端均安装 **pwsablefix-1.5.1.jar**，并移出旧版同名附属。需要 Java 21。1.5.1修正1.5.0过高的GeckoLib限制，直接使用P&W内置库，无需另装GeckoLib。
 
 | 组件 | 推荐的已验证版本 |
 | --- | --- |
@@ -29,9 +29,9 @@
 | Sable | 2.0.6 |
 | Create Electro Energetics | 1.21.1-1.2.0-127 |
 | DragonLib | 3.0.29 |
-| GeckoLib | 4.9.3 |
+| GeckoLib | 4.8.4，由P&W内置，无需另装 |
 
-正式版对 P&W、Sable、CEE 采用精确版本约束；其他允许范围和内置库说明见 [依赖与安装](docs/依赖与安装.md)。Sable Companion、Veil、Flywheel、Ponder、Architectury等由相应前置内置，不需重复下载。本版要求的GeckoLib 4.9.3高于P&W内置版本，需要另装。
+正式版对 P&W、Sable、CEE 采用精确版本约束；其他允许范围和内置库说明见 [依赖与安装](docs/依赖与安装.md)。GeckoLib、Sable Companion、Veil、Flywheel、Ponder、Architectury等由相应前置内置，不需重复下载。
 
 **EMU Cab、Simurail、DriveByWire、DriveBySable不是必装依赖。** EMU Cab仅用于可选驾驶台联动。独立渐变电机、转向架VVVF音效由EMU Cab提供。
 
@@ -53,7 +53,7 @@ JDK 21，先按 [本地依赖说明](libs/README.md) 准备第三方JAR，再执
 ./gradlew build
 ```
 
-Windows使用 `./gradlew.bat build`。产物：`build/libs/pwsablefix-1.5.0.jar`。首次构建需要联网获取Gradle、NeoForge及映射。第三方模组JAR不提交到本仓库，也不会打包进发行物。
+Windows使用 `./gradlew.bat build`。产物：`build/libs/pwsablefix-1.5.1.jar`。首次构建需要联网获取Gradle、NeoForge及映射。第三方模组JAR不提交到本仓库，也不会打包进发行物。
 
 GitHub Actions运行触网音效状态检查；真实CEE求解器与Sable物理体回归入口为 `tools/check-multiarm.gradle`、`tools/check-moving-electrical.gradle`。测试须在隔离实例中准备运行依赖，不能用于玩家存档。传入 `-PpackagedModTest` 可关闭源码模组注入，测试放在测试实例mods中的正式JAR；用 `-PtestGameDir=...` 指定隔离目录。
 

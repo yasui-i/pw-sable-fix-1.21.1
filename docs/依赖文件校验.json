@@ -41,11 +41,11 @@
   },
   {
     "file": "geckolib.jar",
-    "sha256": "20a1995e4074f387ff549e2c57ea79dd7d41ee83c6afb9dd6a6e840e592d1c47",
+    "sha256": "f96a66c5f93667d2bc75606a8ee812b7b85a3539762fbc3e05b01a3085ec8f20",
     "mods": [
       {
         "id": "geckolib",
-        "version": "4.9.3"
+        "version": "4.8.4"
       }
     ]
   },
