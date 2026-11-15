@@ -1,5 +1,7 @@
 // Deterministic moving Sable collector against real PAW geometry and the real CEE solver.
 allprojects { afterEvaluate {
+    def testDir=project.findProperty('testGameDir')?:'build/moving-electrical-server'
+    if(project.hasProperty('packagedModTest'))neoForge.mods.clear()
     tasks.register('compileMovingElectricalHarness', JavaCompile) {
         source = fileTree('tools/moving-electrical-harness') { include '**/*.java' }
         classpath = sourceSets.main.compileClasspath + sourceSets.main.output
@@ -12,9 +14,9 @@ allprojects { afterEvaluate {
         from layout.buildDirectory.dir('moving-electrical-harness-classes')
         from('tools/moving-electrical-harness') { include 'META-INF/**' }
         archiveFileName = 'pwsable-moving-electrical-test.jar'
-        destinationDirectory = layout.buildDirectory.dir('moving-electrical-server/mods')
+        destinationDirectory = file(testDir+'/mods')
     }
-    neoForge.runs.server.gameDirectory = file('build/moving-electrical-server')
+    neoForge.runs.server.gameDirectory = file(testDir)
     if(project.hasProperty('movingAC')) neoForge.runs.server.systemProperty 'pwsable.test.movingAC','true'
     def bridgeClasses = 'com/yasui_i/pwsablefix/compat'
     tasks.register('restoreMovingElectricalClasses') {
@@ -29,7 +31,7 @@ allprojects { afterEvaluate {
         dependsOn 'movingElectricalHarnessJar'
         finalizedBy 'restoreMovingElectricalClasses'
         doFirst {
-            file('build/moving-electrical-server/moving-electrical-result.txt').delete()
+            file(testDir+'/moving-electrical-result.txt').delete()
             if(project.hasProperty('movingBaseline')) {
                 copy {
                     from file('build/classes/java/main/'+bridgeClasses)
@@ -44,7 +46,7 @@ allprojects { afterEvaluate {
             }
         }
         doLast {
-            def result = file('build/moving-electrical-server/moving-electrical-result.txt')
+            def result = file(testDir+'/moving-electrical-result.txt')
             if (!result.exists() || !result.text.contains('RESULT PASS') || result.text.contains('FAIL'))
                 throw new GradleException(result.exists() ? result.text : 'Moving electrical harness did not finish')
         }

@@ -1,11 +1,14 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
+issueTrackerURL="https://github.com/yasui-i/pw-sable-fix-1.21.1/issues"
 
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
+logoFile="logo256.png"
+displayURL="https://github.com/yasui-i/pw-sable-fix-1.21.1"
 description='''
 Redstone-controlled PAW and CEE pantographs for Sable physics trains.
 Power raises the collector; losing power lowers it. PAW collectors expose a CEE electrical terminal
@@ -20,7 +23,7 @@ config="${mod_id}.mixins.json"
 [[dependencies.${mod_id}]]
     modId="neoforge"
     type="required"
-    versionRange="[21.1.0,)"
+    versionRange="[21.1.242,21.2.0)"
     ordering="NONE"
     side="BOTH"
 
@@ -34,49 +37,49 @@ config="${mod_id}.mixins.json"
 [[dependencies.${mod_id}]]
     modId="create"
     type="required"
-    versionRange="[6.0.7,)"
+    versionRange="[6.0.10,6.1.0)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="pantographsandwires"
     type="required"
-    versionRange="[1.21.1-beta-0.2.0,)"
+    versionRange="[1.21.1-beta-0.2.3-C6]"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="sable"
     type="required"
-    versionRange="[2.0.0,)"
+    versionRange="[2.0.6]"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="sablecompanion"
     type="required"
-    versionRange="[1.6.0,)"
+    versionRange="[1.6.0]"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="geckolib"
     type="required"
-    versionRange="[4.8.4,)"
+    versionRange="[4.9.3,5.0.0)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="dragonlib"
     type="required"
-    versionRange="[3.0.28,)"
+    versionRange="[3.0.29,3.1.0)"
     ordering="AFTER"
     side="BOTH"
 
 [[dependencies.${mod_id}]]
     modId="electroenergetics"
     type="required"
-    versionRange="[1.2.0-127,)"
+    versionRange="[1.21.1-1.2.0-127]"
     ordering="AFTER"
     side="BOTH"
 

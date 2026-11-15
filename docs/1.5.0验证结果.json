@@ -1,0 +1,32 @@
+{
+  "version": "1.5.0",
+  "sha256": "a2fd456b0791995762eea757db84caa1bf235c9f12a17b57b24c75c6119cd65c",
+  "bytes": 145750,
+  "checks": {
+    "build": {
+      "result": "PASS"
+    },
+    "multiarm": {
+      "result": "PASS",
+      "assertions": 75
+    },
+    "moving_dc": {
+      "result": "PASS",
+      "assertions": 136
+    },
+    "moving_ac": {
+      "result": "PASS",
+      "assertions": 136
+    }
+  },
+  "artifact_compared_to": "1.4.5",
+  "game_classes_unchanged": true,
+  "original_logos_preserved": true,
+  "third_party_mods_bundled": false,
+  "test_environment": "Minecraft1.21.1 NeoForge21.1.242 Java21; six external dependencies + their bundled libraries; packaged JAR selected by loader",
+  "limitations": [
+    "No full player-route manual driving retest",
+    "No client logo-screen or audio listening retest",
+    "Allowed dependency ranges are not all individually tested"
+  ]
+}

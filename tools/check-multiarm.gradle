@@ -1,5 +1,7 @@
 // Real isolated NeoForge server; never touches a player world or launcher installation.
 allprojects { afterEvaluate {
+    def testDir=project.findProperty('testGameDir')?:'build/multiarm-server'
+    if(project.hasProperty('packagedModTest'))neoForge.mods.clear()
     tasks.register('compileMultiarmHarness', JavaCompile) {
         source = fileTree('tools/multiarm-harness') { include '**/*.java' }
         classpath = sourceSets.main.compileClasspath + sourceSets.main.output
@@ -12,14 +14,14 @@ allprojects { afterEvaluate {
         from layout.buildDirectory.dir('multiarm-harness-classes')
         from('tools/multiarm-harness') { include 'META-INF/**' }
         archiveFileName = 'pwsable-multiarm-test.jar'
-        destinationDirectory = layout.buildDirectory.dir('multiarm-server/mods')
+        destinationDirectory = file(testDir+'/mods')
     }
-    neoForge.runs.server.gameDirectory = file('build/multiarm-server')
+    neoForge.runs.server.gameDirectory = file(testDir)
     tasks.named('runServer') {
         dependsOn 'multiarmHarnessJar'
-        doFirst { file('build/multiarm-server/multiarm-check-result.txt').delete() }
+        doFirst { file(testDir+'/multiarm-check-result.txt').delete() }
         doLast {
-            def result = file('build/multiarm-server/multiarm-check-result.txt')
+            def result = file(testDir+'/multiarm-check-result.txt')
             if (!result.exists() || !result.text.contains('RESULT PASS') || result.text.contains('FAIL'))
                 throw new GradleException(result.exists() ? result.text : 'Multiarm harness did not finish')
         }

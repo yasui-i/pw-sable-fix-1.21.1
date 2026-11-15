@@ -1,0 +1,112 @@
+[
+  {
+    "file": "create.jar",
+    "sha256": "ef87fe5709f1ba1f5b8bb20a2925b5afb4669e178fd6d8bf10c167759eefe37a",
+    "mods": [
+      {
+        "id": "create",
+        "version": "6.0.10"
+      }
+    ]
+  },
+  {
+    "file": "dragonlib.jar",
+    "sha256": "33a81190f76c9cbacced6c22685e4ccc3a025940c41d3abc6d29f4a558915493",
+    "mods": [
+      {
+        "id": "dragonlib",
+        "version": "3.0.29"
+      }
+    ]
+  },
+  {
+    "file": "electroenergetics.jar",
+    "sha256": "f15c53b1b25b54eff7fc9bc27cf5f484973be67380fdb3530e80be3ae58abcf0",
+    "mods": [
+      {
+        "id": "electroenergetics",
+        "version": "1.21.1-1.2.0-127"
+      }
+    ]
+  },
+  {
+    "file": "flywheel.jar",
+    "sha256": "31dda15c205eb596d3b3449ef03f6af7363a6cd35b3da4bfe916b304f9e5337e",
+    "mods": [
+      {
+        "id": "flywheel",
+        "version": "1.0.6"
+      }
+    ]
+  },
+  {
+    "file": "geckolib.jar",
+    "sha256": "20a1995e4074f387ff549e2c57ea79dd7d41ee83c6afb9dd6a6e840e592d1c47",
+    "mods": [
+      {
+        "id": "geckolib",
+        "version": "4.9.3"
+      }
+    ]
+  },
+  {
+    "file": "pantographsandwires.jar",
+    "sha256": "8eb1232e6bfac4e2c3b421f7b8bc39f841fad20b41a1ac77b12a62f0ec0cc79b",
+    "mods": [
+      {
+        "id": "pantographsandwires",
+        "version": "1.21.1-beta-0.2.3-C6"
+      }
+    ]
+  },
+  {
+    "file": "ponder.jar",
+    "sha256": "0cf4611ad853042b689ac386184c5bbe02950efcffddb49e5f604e82baddb0dc",
+    "mods": [
+      {
+        "id": "ponder",
+        "version": "1.0.82+mc1.21.1"
+      }
+    ]
+  },
+  {
+    "file": "registrate.jar",
+    "sha256": "510f4041c41739f1d8ea8850ab8364d3e3a5fada8529beed5d9f479e2523db52",
+    "mods": []
+  },
+  {
+    "file": "sable-companion.jar",
+    "sha256": "873633e35046e3761b277ff8a1ecad0d55d9a3014fa81a0b084c9aecba1f3bed",
+    "mods": [
+      {
+        "id": "sablecompanion",
+        "version": "1.6.0"
+      }
+    ]
+  },
+  {
+    "file": "sable-rapier.jar",
+    "sha256": "0f0ec5f9a0cdbff937fb36542eb568988f27e6eb7f848cb4df35ad202ced53a7",
+    "mods": []
+  },
+  {
+    "file": "sable.jar",
+    "sha256": "9c199157843bf953a47dff625fc5bb41c01a90538d35ad18e6996bbcb8a617c2",
+    "mods": [
+      {
+        "id": "sable",
+        "version": "2.0.6"
+      }
+    ]
+  },
+  {
+    "file": "veil.jar",
+    "sha256": "774b83887d882dc47cd4d29d140cef0c8677747a6fe7799649f490926a4e0265",
+    "mods": [
+      {
+        "id": "veil",
+        "version": "4.3.2"
+      }
+    ]
+  }
+]
