@@ -1,59 +1,74 @@
 package com.yasui_i.pwsablefix.sound;
 
-/** Debounces the physical, energized contact instead of treating every wire segment as a new contact. */
+/** Tracks one collector's contact strip across animation frames and wire seams. */
 public final class PantographContactSoundState {
-    // PAW's expand animation lasts four seconds at 0.25 speed. Cue the
-    // initial touch during the rise, about two seconds before final settling.
-    public static final int RAISE_TICKS = 40;
-    private static final int DISCONNECT_TICKS = 4;
+    private static final double UNSET = Double.NEGATIVE_INFINITY;
+    private static final int LOSS_DEBOUNCE_TICKS = 4;
     private static final int RETRIGGER_TICKS = 20;
-    private long raisedAt = Long.MIN_VALUE;
-    private long disconnectedAt = Long.MIN_VALUE;
-    private long lastSoundAt = Long.MIN_VALUE;
-    private long lastTick = Long.MIN_VALUE;
-    private boolean raised;
-    private boolean contactLatched;
-    private long contactEvents, disconnectEvents;
-    private boolean departure;
-    public boolean departure(){return departure;}
 
-    public boolean update(long tick, boolean active, boolean energizedContact) {
-        return update(tick, active, energizedContact, energizedContact);
+    private double lastTick = UNSET;
+    private double wireMissingSince = UNSET;
+    private double unpoweredSince = UNSET;
+    private double lastSoundAt = UNSET;
+    private boolean contactLatched;
+    private boolean poweredContact;
+    private boolean departure;
+
+    /** Whether the last event returned by {@link #update} was a separation. */
+    public boolean departure() {
+        return departure;
     }
 
-    public boolean update(long tick, boolean active, boolean physicalContact, boolean energizedContact) {
-        if (tick <= lastTick) return false;
+    public boolean update(double tick, boolean active, boolean wirePresent, boolean headTouching,
+                          boolean energizedContact) {
+        if (!Double.isFinite(tick) || tick <= lastTick) return false;
+        boolean firstSample = lastTick == UNSET;
         lastTick = tick;
-        if (!active) {
-            boolean departing = contactLatched;
-            raised = false;
-            contactLatched = false;
-            disconnectedAt = Long.MIN_VALUE;
-            if (departing) { disconnectEvents++; lastSoundAt = tick; departure=true; }
-            return departing;
+
+        if (!contactLatched) {
+            if (!wirePresent || !headTouching) return false;
+            // Latch the physical touch even on a dead wire. A later voltage change alone is not a touch.
+            contactLatched = true;
+            poweredContact = energizedContact;
+            return !firstSample && active && energizedContact && tick - lastSoundAt >= RETRIGGER_TICKS
+                    && play(tick, false);
         }
-        if (!raised) {
-            raised = true;
-            raisedAt = tick;
+
+        if (!wirePresent) {
+            if (wireMissingSince == UNSET) wireMissingSince = tick;
+            return tick - wireMissingSince >= LOSS_DEBOUNCE_TICKS && separate(tick);
         }
-        if (!physicalContact) {
-            if (disconnectedAt == Long.MIN_VALUE) disconnectedAt = tick;
-            if (tick - disconnectedAt + 1 >= DISCONNECT_TICKS && contactLatched) {
-                contactLatched = false;
-                disconnectEvents++;
-                departure=true;
-                lastSoundAt = tick;
-                return true;
-            }
-            return false;
+        wireMissingSince = UNSET;
+
+        // While raised, the stock animation bounces off the wire once. During lowering, a
+        // measured gap below the wire is a real separation and needs no additional delay.
+        if (!active && !headTouching) return separate(tick);
+
+        if (energizedContact) {
+            poweredContact = true;
+            unpoweredSince = UNSET;
+        } else if (active && poweredContact) {
+            // A transient telemetry gap (including the first packet for a redstone change)
+            // should not clear the cue. Once lowering begins the circuit is disconnected,
+            // but the head can still be on the wire until the animation pulls it away.
+            if (unpoweredSince == UNSET) unpoweredSince = tick;
+            if (tick - unpoweredSince >= LOSS_DEBOUNCE_TICKS) poweredContact = false;
         }
-        disconnectedAt = Long.MIN_VALUE;
-        if (contactLatched || !energizedContact || tick - raisedAt < RAISE_TICKS) return false;
-        contactLatched = true;
-        if (lastSoundAt != Long.MIN_VALUE && tick - lastSoundAt < RETRIGGER_TICKS) return false;
+        return false;
+    }
+
+    private boolean separate(double tick) {
+        boolean wasPowered = poweredContact;
+        contactLatched = false;
+        poweredContact = false;
+        wireMissingSince = UNSET;
+        unpoweredSince = UNSET;
+        return wasPowered && play(tick, true);
+    }
+
+    private boolean play(double tick, boolean departing) {
         lastSoundAt = tick;
-        contactEvents++;
-        departure=false;
+        departure = departing;
         return true;
     }
 }

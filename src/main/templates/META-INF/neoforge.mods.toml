@@ -14,7 +14,7 @@ Redstone-controlled PAW and CEE pantographs for Sable physics trains.
 Power raises the collector; losing power lowers it. PAW collectors expose a CEE electrical terminal
 and feed real CEE circuits from PAW contact/feed wires or CEE catenary, with Sable pose transforms.
 Multi-arm cantilevers expose separate CEE terminals, and inline insulators split conductor sections.
-Adds moving contact/departure arc audio. The independent electric motor is now provided by EMU Cab.
+Adds CEE-style sparks and moving contact/departure arc audio synchronized to the animated collector head.
 '''
 
 [[mixins]]

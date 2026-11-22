@@ -44,7 +44,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * chaser), so this mixin mirrors that path and adds the chaser tick itself.</p>
  */
 @Mixin(value = PantographBlockEntity.class, remap = false)
-public abstract class PantographBlockEntityMixin implements com.yasui_i.pwsablefix.compat.RegisteredPantograph {
+public abstract class PantographBlockEntityMixin implements com.yasui_i.pwsablefix.compat.RegisteredPantograph,
+        com.yasui_i.pwsablefix.compat.PantographWireContact {
+
+    @Unique private double pwsablefix$wireHeight = -1;
+    @Override public double pwsablefix$wireHeight(){return pwsablefix$wireHeight;}
 
     @Unique private String pwsablefix$consist="";
     @Unique private int pwsablefix$car;
@@ -141,6 +145,7 @@ public abstract class PantographBlockEntityMixin implements com.yasui_i.pwsablef
             double cee=com.yasui_i.pwsablefix.compat.CeeWireContact.height(self.getLevel(),origin,up,right);
             if(cee>=0&&(cir.getReturnValue()<0||cee<cir.getReturnValue()))cir.setReturnValue(cee);
         }
+        pwsablefix$wireHeight=cir.getReturnValue();
         // Redstone commands raise/lower the mechanism, independently of a wire
         // being overhead. Electrical contact still requires an actual PAW/CEE conductor.
         if(cir.getReturnValue()<0&&self.isExpandable())cir.setReturnValue(PantographBlockEntity.DELTA_HEIGHT);

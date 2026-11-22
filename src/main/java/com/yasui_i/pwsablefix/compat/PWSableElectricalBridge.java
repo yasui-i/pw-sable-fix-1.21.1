@@ -60,17 +60,16 @@ public final class PWSableElectricalBridge {
         var contact=active?PawWireElectricity.contact(level,pos,state):null;
         if(contact==null)contacts.remove(pos);else contacts.put(pos.immutable(),contact);
         var node=active?contact(level,pos,delegate):null;
-        double volts=node!=null?solved(level,pos).voltage:0;
+        var measurement=node!=null?solved(level,pos):ZERO;
         // The collector touches the overhead supply before the main breaker, so an open VCB
         // must not suppress its contact arc. An unpowered wire cannot produce an arc.
-        var facing=state.getValue(de.mrjulsen.paw.block.PantographBlock.FACING);
-        if(facing.getAxis()==net.minecraft.core.Direction.Axis.X)facing=facing.getOpposite();
-        double angle=Math.toRadians(-facing.toYRot());
-        double height=contact==null?1.7:contact.height();
-        PantographContactSounds.observe(level,pos,active,node!=null,node!=null&&Double.isFinite(volts)&&volts>1,
-                (float)(.5+Math.sin(angle)*.25),
-                (float)(de.mrjulsen.paw.blockentity.PantographBlockEntity.MIN_HEIGHT+height),
-                (float)(.5+Math.cos(angle)*.25));
+        // Keep geometry while lowering: loss of redstone precedes the animated
+        // head leaving the wire. Never substitute a fixed 1.7-block wire height.
+        var visualContact=contact!=null?contact:(!active?PawWireElectricity.contact(level,pos,state):null);
+        var point=visualContact!=null?visualContact.localPosition():CeeServerWireContact.localPosition(level,pos);
+        boolean physical=point!=null&&(!active||node!=null);
+        PantographContactSounds.observe(level,pos,physical,node!=null&&measurement.voltage>1,
+                measurement.current,point);
     }
 
     public static void forget(ServerLevel level, BlockPos pos) {

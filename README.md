@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/assets/logo.png" alt="P&W Sable Fix Logo" width="256"></p>
 
-# P&W Sable Fix 1.5.2
+# P&W Sable Fix 1.5.3
 
 **让接触网真正为你的物理列车供电。**
 
@@ -12,13 +12,13 @@
 - Sable 物理结构上的 P&W 受电弓按车体位姿检测接触网，从 P&W 或 CEE 线网取电。
 - P&W 接触线、馈线参与 CEE 电路仿真，可向车载电气负载供电。
 - 多腕臂横排独立端子，支持分别供电；线缆绝缘子支持分段隔离。
-- 接触、脱离带电线网时播放不同长度的电弧声，音源跟随车体移动。
+- 按实际弓头动画触发 CEE 风格电弧粒子及接触、脱离音效，音源跟随车体移动；升弓回弹不会重复触发。
 - 可选搭配 EMU Cab，支持03/06车受电弓登记、VCB控制及真实网压、网流反馈。
 - 保留1.4.5的行驶换线段遥测同步修复。
 
 ## 安装与依赖
 
-客户端、服务端均安装 **pwsablefix-1.5.2.jar**，并移出旧版同名附属。需要 Java 21。本版改为适配 CEE 公开发布版 1.1.4。
+客户端、服务端均安装 **pwsablefix-1.5.3.jar**，并移出旧版同名附属。需要 Java 21。本版改为适配 CEE 公开发布版 1.1.4。
 
 | 组件 | 推荐的已验证版本 |
 | --- | --- |
@@ -50,7 +50,7 @@ JDK 21，先按 [本地依赖说明](libs/README.md) 准备第三方JAR，再执
 ./gradlew build
 ```
 
-Windows使用 `./gradlew.bat build`。产物：`build/libs/pwsablefix-1.5.2.jar`。首次构建需要联网获取Gradle、NeoForge及映射。第三方模组JAR不提交到本仓库，也不会打包进发行物。
+Windows使用 `./gradlew.bat build`。产物：`build/libs/pwsablefix-1.5.3.jar`。首次构建需要联网获取Gradle、NeoForge及映射。第三方模组JAR不提交到本仓库，也不会打包进发行物。
 
 GitHub Actions运行触网音效状态检查；真实CEE求解器与Sable物理体回归入口为 `tools/check-multiarm.gradle`、`tools/check-moving-electrical.gradle`。测试须在隔离实例中准备运行依赖，不能用于玩家存档。传入 `-PpackagedModTest` 可关闭源码模组注入，测试放在测试实例mods中的正式JAR；用 `-PtestGameDir=...` 指定隔离目录。
 

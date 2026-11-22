@@ -18,7 +18,8 @@ import java.util.*;
 
 /** Electrical topology is derived from real PAW edges, never from adjacent poles or wire proximity. */
 public final class PawWireElectricity {
-    public record Contact(UUID edge,String wire,double distance,AttachedNode node,double height){}
+    public record Contact(UUID edge,String wire,double distance,AttachedNode node,double height,
+                          net.minecraft.world.phys.Vec3 localPosition){}
     private record Tap(double distance,Node node){}
     private static AttachedNode junction(UUID id){return new AttachedNode(0,"PWSable/PAW/node/"+id);}
     /** PAW intentionally stores all arms on one WireNode; the endpoint provider
@@ -67,7 +68,11 @@ public final class PawWireElectricity {
                     if(height>de.mrjulsen.paw.blockentity.PantographBlockEntity.DELTA_HEIGHT+.02)continue;
                     double distance=collision.worldPosToWirePos(name,hit);
                     boolean insulated=edge.getDecorations().stream().anyMatch(v->v.getDecoration() instanceof InsulatorWireDecoration&&v.getWireName().equals(name)&&Math.abs(v.getPos()-distance)<.12);
-                    if(!insulated&&(best==null||height<best.height))best=new Contact(edge.getId(),name,distance,tap(edge.getId(),"collector/"+pos.asLong()),height);
+                    if(!insulated&&(best==null||height<best.height)){
+                        var point=new net.minecraft.world.phys.Vec3(hit.x,hit.y,hit.z);
+                        if(sub!=null)point=sub.logicalPose().transformPositionInverse(point);
+                        best=new Contact(edge.getId(),name,distance,tap(edge.getId(),"collector/"+pos.asLong()),height,point);
+                    }
                 }
             }
         }

@@ -12,9 +12,10 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
-/** The sound retains the collector's plot position so Sable can move it throughout playback. */
+/** Electrical facts; clients align their presentation with the actual animated collector head. */
 @EventBusSubscriber(modid = PWSableFix.MOD_ID, bus = EventBusSubscriber.Bus.MOD)
-public record PantographContactSoundPayload(BlockPos pos, float offsetX, float offsetY, float offsetZ,boolean departure)
+public record PantographContactSoundPayload(BlockPos pos, float offsetX, float offsetY, float offsetZ,
+                                          boolean wirePresent, boolean energized, float current)
         implements CustomPacketPayload {
     public static final Type<PantographContactSoundPayload> TYPE =
             new Type<>(PWSableFix.id("pantograph_contact_sound"));
@@ -24,9 +25,12 @@ public record PantographContactSoundPayload(BlockPos pos, float offsetX, float o
                 buffer.writeFloat(packet.offsetX);
                 buffer.writeFloat(packet.offsetY);
                 buffer.writeFloat(packet.offsetZ);
-                buffer.writeBoolean(packet.departure);
+                buffer.writeBoolean(packet.wirePresent);
+                buffer.writeBoolean(packet.energized);
+                buffer.writeFloat(packet.current);
             }, buffer -> new PantographContactSoundPayload(buffer.readBlockPos(),
-                    buffer.readFloat(), buffer.readFloat(), buffer.readFloat(),buffer.readBoolean()));
+                    buffer.readFloat(), buffer.readFloat(), buffer.readFloat(),buffer.readBoolean(),
+                    buffer.readBoolean(),buffer.readFloat()));
 
     @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
 
@@ -40,7 +44,7 @@ public record PantographContactSoundPayload(BlockPos pos, float offsetX, float o
     }
 
     @SubscribeEvent public static void register(RegisterPayloadHandlersEvent event) {
-        event.registrar("2").playToClient(TYPE, CODEC, (packet, context) ->
-                context.enqueueWork(() -> com.yasui_i.pwsablefix.client.PantographContactSounds.play(packet)));
+        event.registrar("3").playToClient(TYPE, CODEC, (packet, context) ->
+                context.enqueueWork(() -> com.yasui_i.pwsablefix.client.PantographContactSounds.receive(packet)));
     }
 }
